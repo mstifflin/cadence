@@ -1,12 +1,12 @@
 steps:
   - label: "fossa analyze"
     agents:
-      queue: "init"
+      queue: "buildkite-gcp-medium"
       docker: "*"
     command: "./scripts/buildkite/fossa.sh"
   - label: ":golang: unit test"
     agents:
-      queue: "workers"
+      queue: "buildkite-gcp-large"
       docker: "*"
     commands:
       - "make .just-build" # ensure that we are not rebuilding binaries and not regenerating code
@@ -25,7 +25,7 @@ steps:
 
   - label: ":lint: validate code is clean"
     agents:
-      queue: "workers"
+      queue: "buildkite-gcp-large"
       docker: "*"
     command: "./scripts/buildkite/golint.sh"
     artifact_paths: []
@@ -39,7 +39,7 @@ steps:
 
   - label: ":golang: integration test with cassandra"
     agents:
-      queue: "workers"
+      queue: "buildkite-gcp-large"
       docker: "*"
     commands:
       - "make .just-build" # ensure that we are not rebuilding binaries and not regenerating code
@@ -56,7 +56,7 @@ steps:
 
   - label: ":golang: integration test with cassandra with ElasticSearch V7"
     agents:
-      queue: "workers"
+      queue: "buildkite-gcp-large"
       docker: "*"
     command:
       - "make .just-build" # ensure that we are not rebuilding binaries and not regenerating code
@@ -73,7 +73,7 @@ steps:
 
   - label: ":golang: integration test with cassandra with OpenSearch v2"
     agents:
-      queue: "workers"
+      queue: "buildkite-gcp-large"
       docker: "*"
     commands:
       - "make .just-build" # ensure that we are not rebuilding binaries and not regenerating code
@@ -90,7 +90,7 @@ steps:
 
   - label: ":golang: integration ndc test with cassandra"
     agents:
-      queue: "workers"
+      queue: "buildkite-gcp-large"
       docker: "*"
     commands:
       - "make .just-build" # ensure that we are not rebuilding binaries and not regenerating code
@@ -107,7 +107,7 @@ steps:
 
   - label: ":golang: integration test with mysql"
     agents:
-      queue: "workers"
+      queue: "buildkite-gcp-large"
       docker: "*"
     commands:
       - "make .just-build" # ensure that we are not rebuilding binaries and not regenerating code
@@ -124,7 +124,7 @@ steps:
 
   - label: ":golang: integration ndc test with mysql"
     agents:
-      queue: "workers"
+      queue: "buildkite-gcp-large"
       docker: "*"
     commands:
       - "make .just-build" # ensure that we are not rebuilding binaries and not regenerating code
@@ -141,7 +141,7 @@ steps:
 
   - label: ":golang: integration test with postgres"
     agents:
-      queue: "workers"
+      queue: "buildkite-gcp-large"
       docker: "*"
     commands:
       - "make .just-build" # ensure that we are not rebuilding binaries and not regenerating code
@@ -158,7 +158,7 @@ steps:
 
   - label: ":golang: integration ndc test with postgres"
     agents:
-      queue: "workers"
+      queue: "buildkite-gcp-large"
       docker: "*"
     commands:
       - "make .just-build" # ensure that we are not rebuilding binaries and not regenerating code
@@ -175,7 +175,7 @@ steps:
 
   - label: ":golang: async wf integration test with kafka"
     agents:
-      queue: "workers"
+      queue: "buildkite-gcp-large"
       docker: "*"
     commands:
       - "make .just-build" # ensure that we are not rebuilding binaries and not regenerating code
@@ -192,7 +192,7 @@ steps:
 
   - label: ":golang: code-coverage"
     agents:
-      queue: "workers"
+      queue: "buildkite-gcp-large"
       docker: "*"
     command: "scripts/buildkite/gocov.sh"
     retry:
@@ -205,7 +205,7 @@ steps:
 
   - label: ":docker: build (no push)"
     agents:
-      queue: "workers"
+      queue: "buildkite-gcp-large"
       docker: "*"
     command: "scripts/buildkite/docker-build.sh"
     retry:

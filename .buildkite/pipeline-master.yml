@@ -1,12 +1,12 @@
 steps:
   - label: "fossa analyze"
     agents:
-      queue: "init"
+      queue: "buildkite-gcp-medium"
       docker: "*"
     command: "./scripts/buildkite/fossa.sh"
   - label: ":golang: unit test"
     agents:
-      queue: "workers"
+      queue: "buildkite-gcp-large"
       docker: "*"
     commands:
       - "CASSANDRA_HOST=cassandra make install-schema && make cover_profile" # make install-schema is needed for a server startup test. See main_test.go
@@ -24,7 +24,7 @@ steps:
 
   - label: ":golangci-lint: validate code is clean"
     agents:
-      queue: "workers"
+      queue: "buildkite-gcp-large"
       docker: "*"
     command: "./scripts/buildkite/golint.sh"
     artifact_paths: []
@@ -38,7 +38,7 @@ steps:
 
   - label: ":golang: integration test with cassandra"
     agents:
-      queue: "workers"
+      queue: "buildkite-gcp-large"
       docker: "*"
     command: "make cover_integration_profile"
     artifact_paths:
@@ -53,7 +53,7 @@ steps:
 
   - label: ":golang: integration test with cassandra with ElasticSearch V7"
     agents:
-      queue: "workers"
+      queue: "buildkite-gcp-large"
       docker: "*"
     command: "make cover_integration_profile"
     artifact_paths:
@@ -68,7 +68,7 @@ steps:
 
   - label: ":golang: integration ndc test with cassandra"
     agents:
-      queue: "workers"
+      queue: "buildkite-gcp-large"
       docker: "*"
     command: "make cover_ndc_profile"
     artifact_paths:
@@ -83,7 +83,7 @@ steps:
 
   - label: ":golang: integration test with mysql"
     agents:
-      queue: "workers"
+      queue: "buildkite-gcp-large"
       docker: "*"
     command: "make cover_integration_profile"
     artifact_paths:
@@ -98,7 +98,7 @@ steps:
 
   - label: ":golang: integration ndc test with mysql"
     agents:
-      queue: "workers"
+      queue: "buildkite-gcp-large"
       docker: "*"
     command: "make cover_ndc_profile"
     artifact_paths:
@@ -113,7 +113,7 @@ steps:
 
   - label: ":golang: integration test with postgres"
     agents:
-      queue: "workers"
+      queue: "buildkite-gcp-large"
       docker: "*"
     command: "make cover_integration_profile"
     artifact_paths:
@@ -128,7 +128,7 @@ steps:
 
   - label: ":golang: integration ndc test with postgres"
     agents:
-      queue: "workers"
+      queue: "buildkite-gcp-large"
       docker: "*"
     command: "make cover_ndc_profile"
     artifact_paths:
@@ -143,7 +143,7 @@ steps:
 
   - label: ":golang: async wf integration test with kafka"
     agents:
-      queue: "workers"
+      queue: "buildkite-gcp-large"
       docker: "*"
     commands:
       - "make .just-build" # ensure that we are not rebuilding binaries and not regenerating code
@@ -160,7 +160,7 @@ steps:
 
   - label: ":golang: code-coverage"
     agents:
-      queue: "workers"
+      queue: "buildkite-gcp-large"
       docker: "*"
     command: "scripts/buildkite/gocov.sh"
     retry:
@@ -173,7 +173,7 @@ steps:
 
   - label: ":docker: build and push master"
     agents:
-      queue: "workers"
+      queue: "buildkite-gcp-large"
       docker: "*"
     command: "scripts/buildkite/docker-push.sh"
     retry:
